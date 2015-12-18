@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
   get 'osero/home'
-
   get 'osero/help'
 
   # The priority is based upon order of creation: first created -> highest priority.
