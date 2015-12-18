@@ -23,14 +23,17 @@
 
 var board =[];
 onload = function(){
-  piece = [document.getElementById("cell")];
+  piece = [document.getElementById("cell"),document.getElementById("black"),document.getElementById("white")];
   for(var i = 0; i<10; i++){
     board[i]=[];
     for(var j=0; j<10; j++){
       board[i][j] = 0;
     }
   }
-
+  board[4][5] = 1;
+  board[5][4] = 1;
+  board[4][4] = 2;
+  board[5][5] = 2;
   showBoard();
 };
 
