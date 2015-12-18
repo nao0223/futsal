@@ -3,7 +3,9 @@
 <title>othello</title>
 <script>
 (function(){
-var turn;
+ var turn;
+var computer=2;
+
 var checkPiece = function(x,y,flip){
   var ret =0;
   for(var dx=-1; dx<=1; dx++){
@@ -27,16 +29,32 @@ var checkPiece = function(x,y,flip){
   return ret;
 };
 
+var computerMove = function(){
+  if(turn==computer){
+    for(var x = 1; x <=8; x++){
+    for(var y = 1; y <=8; y++){
+      if(board[x][y] == 0 && checkPiece(x,y,true)){
+        turnChange();
+        return;
+      } 
+    }
+    }
+  }
+
+};
+
+
 var turnChange = function(){
   var b = 0, w = 0;
   turn = 3 - turn;
   var message = ((turn == 1)?"black":"white");
 
-  for(var x = 1; x <=8; x++){
+    for(var x = 1; x <=8; x++){
     for(var y = 1; y <=8; y++){
       if(board[x][y] == 0 && checkPiece(x,y,false)){
         document.getElementById("message").innerHTML = message + "'s move";
         showBoard();
+        computerMove();
         return;
       }
     }
