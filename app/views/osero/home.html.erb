@@ -16,6 +16,15 @@
     c.style.left = ((x-1) * 32)+"px";
     c.style.top = ((y-1) * 32)+"px";
     b.appendChild(c);
+    if(board[x][y] == 0){
+      (function(){
+        var _x=x, _y=y;
+        c.onclick = function(){
+          board[_x][_y] =1;
+          showBoard();
+        };
+      })();
+    }
   }
   }
 };
