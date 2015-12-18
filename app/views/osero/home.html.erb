@@ -3,7 +3,7 @@
 <title>othello</title>
 <script>
 (function(){
-var turn=1;
+var turn;
 var checkPiece = function(x,y,flip){
   var ret =0;
   for(var dx=-1; dx<=1; dx++){
@@ -27,6 +27,47 @@ var checkPiece = function(x,y,flip){
   return ret;
 };
 
+var turnChange = function(){
+  var b = 0, w = 0;
+  turn = 3 - turn;
+  var message = ((turn == 1)?"black":"white");
+
+  for(var x = 1; x <=8; x++){
+    for(var y = 1; y <=8; y++){
+      if(board[x][y] == 0 && checkPiece(x,y,false)){
+        document.getElementById("message").innerHTML = message + "'s move";
+        showBoard();
+        return;
+      }
+    }
+  }
+  turn = 3 - turn;
+  message += "pass<br>" + ((turn == 1)?"black":"white") + "'s move";
+  for(var x = 1; x <=8; x++){
+    for(var y = 1; y <=8; y++){
+      if(board[x][y] == 0 && checkPiece(x,y,false)){
+        document.getElementById("message").innerHTML = message;
+        showBoard();
+        return;
+      } else {
+        if(board[x][y] == 1){b++;}
+        if(board[x][y] == 2){w++;}
+      
+      }
+    }
+  }
+
+  message = "black:" + b + "white:" + w + "<br>";
+  if(b == w){
+    message += "draw";
+  } else {
+    message += ((b > w)? "black": "white") +"won";
+  }
+  document.getElementById("message").innerHTML = message;
+
+  showBoard();
+};
+
 
  var piece;
  var showBoard = function(){
@@ -45,8 +86,7 @@ var checkPiece = function(x,y,flip){
         var _x=x, _y=y;
         c.onclick = function(){
           if(checkPiece(_x,_y,true)){
-            showBoard();
-            turn = 3 - turn;
+            turnChange();
           }
         };
       })();
@@ -58,6 +98,7 @@ var checkPiece = function(x,y,flip){
 
 var board =[];
 onload = function(){
+  turn = 2;
   piece = [document.getElementById("cell"),document.getElementById("black"),document.getElementById("white")];
   for(var i = 0; i<10; i++){
     board[i]=[];
@@ -69,7 +110,7 @@ onload = function(){
   board[5][4] = 1;
   board[4][4] = 2;
   board[5][5] = 2;
-  showBoard();
+  turnChange();
 };
 
 })();
@@ -92,9 +133,9 @@ onload = function(){
 </div>
 </div>
 
-<div id="board" style="position:relative">
-test
+<div id="board" style="position:relative;width:257px;height:257px;">
 </div>
+<div id ="message"></div>
 
 </body>
 </html>
